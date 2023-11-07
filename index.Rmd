@@ -7,11 +7,46 @@ output:
     self_contained: false
 ---
 
+> This data is based off of https://vincentarelbundock.github.io/Rdatasets/doc/Ecdat/Star.html
+
+# Shifted Focus
+
+I have shifted my focus due to a lack of data on my initial project idea.  
+
+## Variable Descriptions
+
+tmathssk - cumulative math scaled score
+
+treadssk - cumulative reading scaled score
+
+classk - type of class, factor with varying levels (regular/small.class/regular.with.aide)
+
+totexpk - cumulative years of teaching experience
+
+sex - boy/girl
+
+freelunk - qualified for free lunch?
+
+race - white/black/other
+
+schidkn - school indicator variable
+
+# Data Background
+
+This data was collected through a cross-sectional study from 1985-1989 under the STAR (Student-Teacher Achievement Ratio) initiative that randomly assigned these students into 3 groups of varying class sizes: small (13-17 students per teacher), regular (22-25 students per teacher), & regular w/ aide (22-25 students along with a full-time teacher's aide). Teachers were also randomly assigned a classroom to instruct, and this study conducted the experiment with kindergarten students until the end of their third grade.  
 
 
-## Project thoughts
+```{r}
+library(tidyverse)
+library(gov50data)
+library(ggplot2)
 
-I am interested in exploring data related to the trends of scope emissions from 
-large tech companies, and comparing them to track net-zero goals (if any). I 
-am still deciding on what I would like to focus on, so I will update this once
-I have a clearer picture on what exactly I want to do.
+data <- read_csv("data/Star.csv")
+
+data <- data |> 
+  ggplot(aes(x = totexpk, y = tmathssk)) +
+  geom_point()
+
+data
+```
+
