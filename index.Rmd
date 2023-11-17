@@ -39,14 +39,37 @@ This data was collected through a cross-sectional study from 1985-1989 under the
 ```{r}
 library(tidyverse)
 library(gov50data)
+library(infer)
 library(ggplot2)
 
-data <- read_csv("data/Star.csv")
+star <- read_csv("data/Star.csv")
 
-data <- data |> 
-  ggplot(aes(x = totexpk, y = tmathssk)) +
-  geom_point()
+mathplot <- star |> 
+  ggplot(aes(x = classk, y = tmathssk, color = classk)) +
+  geom_boxplot() + 
+  labs(x = "Class Size",
+       y = "Cumulative Math Score")
 
-data
+mathplot
+
+readingplot <- star |> 
+  ggplot(aes(x = classk, y = treadssk, color = classk)) +
+  geom_boxplot() + 
+  labs(x = "Class Size",
+       y = "Cumulative Reading Score")
+
+readingplot
+
+
+math_fit_1 <- lm(data = star, tmathssk ~ classk)
+
+math_fit_1 |>
+  broom::tidy() |>
+  select(term, estimate) |>  
+  knitr::kable(digits = 2)
+
+
 ```
+Created two boxplots to compare the results of the 3 class sizes and their performance on reading and math test scores. These visualizations support the hypothesis of smaller class sizes being the most effective for student performance on tests. Smaller class sizes have the highest median in both test scores, but it's interesting to note that the minimum of small class sizes is lower than reg class sizes with aides for testing results.
 
+From the linear regression output, the regular class has an estimated cumulative math score of 483.26 points. We can infer that on average, students in the regular class with an aide scores 0.25 points less than students in the regular class  and on average, students in the small class score 8.21 points higher than those in students in regular classes with aides. 
