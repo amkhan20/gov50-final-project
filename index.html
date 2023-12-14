@@ -1473,6 +1473,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   <!--/radix_placeholder_distill-->
   <script src="index_files/header-attrs-2.24/header-attrs.js"></script>
+  <script src="index_files/kePrint-0.0.1/kePrint.js"></script>
+  <link href="index_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
   <script src="index_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="index_files/popper-2.6.0/popper.min.js"></script>
   <link href="index_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1520,8 +1522,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <blockquote>
 <p>This data is based off of <a href="https://vincentarelbundock.github.io/Rdatasets/doc/Ecdat/Star.html" class="uri">https://vincentarelbundock.github.io/Rdatasets/doc/Ecdat/Star.html</a></p>
 </blockquote>
-<h1 id="shifted-focus">Shifted Focus</h1>
-<p>I have shifted my focus due to a lack of data on my initial project idea.</p>
+<h1 id="introduction">Introduction</h1>
+<p>Are smaller class sizes effective in boosting test scores? In this study, I intend on examining the impact smaller class sizes have on test scores, comparing them with a regular class size and a regular class size with a teacher aide. I hypothesize that both smaller class sizes and a regular class size with a teacher aide will produce students with higher test scores. My sample is from the STAR initiative that took place from 1985-1989 that randomly assigned students into the 3 groups mentioned above. The variable of interest are the test scores grouped with their respective class sizes. The explanatory variable would be the class sizes and the outcome variable is the test scores. I will be running a linear regression model to determine if the scores of the class sizes are, on average, higher or lower than the scores in the control group. If I observe that smaller class sizes prove to produce higher test scores, this would support my hypothesis. On the other hand, if I observe lower test scores in smaller class sizes when compared with students in regular class sizes, then my hypothesis would be incorrect.</p>
 <h2 id="variable-descriptions">Variable Descriptions</h2>
 <p>tmathssk - cumulative math scaled score</p>
 <p>treadssk - cumulative reading scaled score</p>
@@ -1543,9 +1545,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span><span class='va'>star</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"data/Star.csv"</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='va'>mathplot</span> <span class='op'>&lt;-</span> <span class='va'>star</span> <span class='op'>|&gt;</span> </span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>classk</span>, y <span class='op'>=</span> <span class='va'>tmathssk</span>, color <span class='op'>=</span> <span class='va'>classk</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> </span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Class Size"</span>,</span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>classk</span>, y <span class='op'>=</span> <span class='va'>tmathssk</span>, color <span class='op'>=</span> <span class='va'>classk</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Class Size"</span>,</span>
 <span>       y <span class='op'>=</span> <span class='st'>"Cumulative Math Score"</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='va'>mathplot</span></span></code></pre>
@@ -1553,48 +1555,246 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <img src="index_files/figure-html5/unnamed-chunk-1-1.png" width="624" />
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>readingplot</span> <span class='op'>&lt;-</span> <span class='va'>star</span> <span class='op'>|&gt;</span> </span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>classk</span>, y <span class='op'>=</span> <span class='va'>treadssk</span>, color <span class='op'>=</span> <span class='va'>classk</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> </span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Class Size"</span>,</span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>classk</span>, y <span class='op'>=</span> <span class='va'>treadssk</span>, color <span class='op'>=</span> <span class='va'>classk</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Class Size"</span>,</span>
 <span>       y <span class='op'>=</span> <span class='st'>"Cumulative Reading Score"</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='va'>readingplot</span></span></code></pre>
 </div>
-<img src="index_files/figure-html5/unnamed-chunk-1-2.png" width="624" />
+<p><img src="index_files/figure-html5/unnamed-chunk-1-2.png" width="624" /></p>
+</div>
+<h1 id="boxplot">Boxplot</h1>
+<p>Created two boxplots to compare the results of the 3 class sizes and their performance on reading and math test scores. In the math boxplot, the small class size has the largest median, Q1, and Q3 measures. Interestingly enough, the upper IQR is lower than anticipated for those in the regular class with an aide as one of their outliers is the maximum upper IQR for students in the control group (regular class size). Also, the Q3 in regular class size with aide is lower than the Q3 in the control. What’s even more interesting is that the median math score is very similar for students in the control and regular class size with an aide.</p>
+<p>In the reading boxplot, the small class size once again has the largest median, Q1, and Q3 measures. However, the lower IQR is greater in the small class size in comparison to the regular class size with an aide (same trend in the math test score boxplot). Similar to the results in the math boxplot, the regular class size with aide seems to have a lower Q1, median, Q3, and upper IQR than students in the control group.</p>
+<p>These visualizations support the hypothesis of smaller class sizes being the most effective for student performance on tests. Smaller class sizes have the highest median in both test scores, but it’s interesting to note that the minimum of small class sizes is lower than reg class sizes with aides for testing results.</p>
+<div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>math_fit_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>star</span>, <span class='va'>tmathssk</span> <span class='op'>~</span> <span class='va'>classk</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>math_fit_1</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, <span class='va'>estimate</span><span class='op'>)</span> <span class='op'>|&gt;</span>  </span>
-<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span></code></pre>
+<span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>math_fit_1</span><span class='op'>)</span></span></code></pre>
 </div>
-<table>
+<pre><code>
+Call:
+lm(formula = tmathssk ~ classk, data = star)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-163.26  -34.01   -5.01   29.74  142.99 
+
+Coefficients:
+                        Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)             483.2610     1.0650 453.785  &lt; 2e-16 ***
+classkregular.with.aide  -0.2511     1.5033  -0.167    0.867    
+classksmall.class         8.2093     1.5630   5.252 1.56e-07 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 47.63 on 5745 degrees of freedom
+Multiple R-squared:  0.006417,  Adjusted R-squared:  0.006071 
+F-statistic: 18.55 on 2 and 5745 DF,  p-value: 9.3e-09</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>modelsummary</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/modelsummary/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>math_fit_1</span>,</span>
+<span>                           statistic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"p = {p.value}"</span><span class='op'>)</span>,</span>
+<span>                           gof_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nobs"</span>, <span class='st'>"r.squared"</span>, <span class='st'>"adj.r.squared"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th style="text-align: left;">term</th>
-<th style="text-align: right;">estimate</th>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+ (1)
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">483.26</td>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+483.261
+</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">classkregular.with.aide</td>
-<td style="text-align: right;">-0.25</td>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = &lt;0.001
+</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">classksmall.class</td>
-<td style="text-align: right;">8.21</td>
+<tr>
+<td style="text-align:left;">
+classkregular.with.aide
+</td>
+<td style="text-align:center;">
+−0.251
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = 0.867
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+classksmall.class
+</td>
+<td style="text-align:center;">
+8.209
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1.5px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1.5px">
+p = &lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+5748
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.006
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.006
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>read_fit_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>star</span>, <span class='va'>treadssk</span> <span class='op'>~</span> <span class='va'>classk</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>read_fit_1</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>
+Call:
+lm(formula = treadssk ~ classk, data = star)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-119.681  -21.681   -4.487   15.513  192.319 
+
+Coefficients:
+                        Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)             434.6810     0.7083 613.692  &lt; 2e-16 ***
+classkregular.with.aide   0.8063     0.9998   0.806     0.42    
+classksmall.class         5.8995     1.0396   5.675 1.45e-08 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 31.68 on 5745 degrees of freedom
+Multiple R-squared:  0.006412,  Adjusted R-squared:  0.006066 
+F-statistic: 18.54 on 2 and 5745 DF,  p-value: 9.44e-09</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>modelsummary</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/modelsummary/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>read_fit_1</span>,</span>
+<span>                           statistic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"p = {p.value}"</span><span class='op'>)</span>,</span>
+<span>                           gof_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nobs"</span>, <span class='st'>"r.squared"</span>, <span class='st'>"adj.r.squared"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+ (1)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+434.681
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = &lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+classkregular.with.aide
+</td>
+<td style="text-align:center;">
+0.806
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = 0.420
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+classksmall.class
+</td>
+<td style="text-align:center;">
+5.899
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1.5px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1.5px">
+p = &lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+5748
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.006
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.006
+</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Created two boxplots to compare the results of the 3 class sizes and their performance on reading and math test scores. These visualizations support the hypothesis of smaller class sizes being the most effective for student performance on tests. Smaller class sizes have the highest median in both test scores, but it’s interesting to note that the minimum of small class sizes is lower than reg class sizes with aides for testing results.</p>
-<p>From the linear regression output, the regular class has an estimated cumulative math score of 483.26 points. We can infer that on average, students in the regular class with an aide scores 0.25 points less than students in the regular class and on average, students in the small class score 8.21 points higher than those in students in regular classes with aides.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>From the linear regression output for math scores, the regular class has an estimated cumulative math score of 483.26 points. We can infer that on average, students in the regular class with an aide score 0.25 points less than students in the regular class and on average, students in the small class score 8.21 points higher than students in regular classes with an aide. Because the p value is extremely small for the small class size, that indicates that that value is statistically significant so we reject the null hypothesis whereas for students in the regular class size with an aide, the p-value is greater then 0.5 which means that it’s not statistically significant so we do not reject the null hypothesis.</p>
+<p>The regression output for reading scores shows that for the regular class, there is an estimated cumulative reading score of 434.68 points. We can infer that on average, students in the regular class with an aide score 0.81 points higher than student in the regular class and on average, students in the small class score 5.90 points higher than students in regular classes with an aide. In this regression, since the p values are less than 0.5, we conclude that the values are statistically significant for both small classes and regular classes with an aide, rejecting the null hypothesis.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>After visualizing the data and running linear regression models, based on the evidence, I conclude that they all support my initial hypothesis of students in smaller class sizes producing higher test scores on average than those in the other groups. Students in smaller classes scored a higher positive average in both tests (~8 pts for math and ~5 pts for reading). However, what this test does not account for is possible hidden learning disabilities students could have while in the groups. In order to remedy this, there should be some metrics/tests in place to ensure that the students within this experiment do not face any obstacles that would negatively impact their performance. Another confounding variable that would be helpful is to know how involved kids are outside of school (how many hours they are spending in extracurricular). This would also impact their performance because if some students are spending a lot of time juggling other activities, this would negatively impact their performance in class as they would be more tired and less likely to fully grasp the material. Similarly, noting the amount of sleep a student gets would also be very helpful to see if that has any impact on their performance (more sleep = proactive, less sleep = cranky / less likely to pay attention).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

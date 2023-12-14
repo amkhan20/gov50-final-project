@@ -9,9 +9,9 @@ output:
 
 > This data is based off of https://vincentarelbundock.github.io/Rdatasets/doc/Ecdat/Star.html
 
-# Shifted Focus
+# Introduction
 
-I have shifted my focus due to a lack of data on my initial project idea.  
+Are smaller class sizes effective in boosting test scores? In this study, I intend on examining the impact smaller class sizes have on test scores, comparing them with a regular class size and a regular class size with a teacher aide. I hypothesize that both smaller class sizes and a regular class size with a teacher aide will produce students with higher test scores. My sample is from the STAR initiative that took place from 1985-1989 that randomly assigned students into the 3 groups mentioned above. The variable of interest are the test scores grouped with their respective class sizes. The explanatory variable would be the class sizes and the outcome variable is the test scores. I will be running a linear regression model to determine if the scores of the class sizes are, on average, higher or lower than the scores in the control group. If I observe that smaller class sizes prove to produce higher test scores, this would support my hypothesis. On the other hand, if I observe lower test scores in smaller class sizes when compared with students in regular class sizes, then my hypothesis would be incorrect. 
 
 ## Variable Descriptions
 
@@ -61,15 +61,44 @@ readingplot <- star |>
 readingplot
 
 
-math_fit_1 <- lm(data = star, tmathssk ~ classk)
-
-math_fit_1 |>
-  broom::tidy() |>
-  select(term, estimate) |>  
-  knitr::kable(digits = 2)
 
 
 ```
-Created two boxplots to compare the results of the 3 class sizes and their performance on reading and math test scores. These visualizations support the hypothesis of smaller class sizes being the most effective for student performance on tests. Smaller class sizes have the highest median in both test scores, but it's interesting to note that the minimum of small class sizes is lower than reg class sizes with aides for testing results.
+# Boxplot 
+Created two boxplots to compare the results of the 3 class sizes and their performance on reading and math test scores. In the math boxplot, the small class size has the largest median, Q1, and Q3 measures. Interestingly enough, the upper IQR is lower than anticipated for those in the regular class with an aide as one of their outliers is the maximum upper IQR for students in the control group (regular class size). Also, the Q3 in regular class size with aide is lower than the Q3 in the control. What's even more interesting is that the median math score is very similar for students in the control and regular class size with an aide. 
 
-From the linear regression output, the regular class has an estimated cumulative math score of 483.26 points. We can infer that on average, students in the regular class with an aide scores 0.25 points less than students in the regular class  and on average, students in the small class score 8.21 points higher than those in students in regular classes with aides. 
+In the reading boxplot, the small class size once again has the largest median, Q1, and Q3 measures. However, the lower IQR is greater in the small class size in comparison to the regular class size with an aide (same trend in the math test score boxplot). Similar to the results in the math boxplot, the regular class size with aide seems to have a lower Q1, median, Q3, and upper IQR than students in the control group. 
+
+These visualizations support the hypothesis of smaller class sizes being the most effective for student performance on tests. Smaller class sizes have the highest median in both test scores, but it's interesting to note that the minimum of small class sizes is lower than reg class sizes with aides for testing results.
+
+
+```{r}
+
+math_fit_1 <- lm(data = star, tmathssk ~ classk)
+summary(math_fit_1)
+
+
+modelsummary::modelsummary(math_fit_1,
+                           statistic = c("p = {p.value}"),
+                           gof_map = c("nobs", "r.squared", "adj.r.squared"))
+
+read_fit_1 <- lm(data = star, treadssk ~ classk)
+summary(read_fit_1)
+
+
+modelsummary::modelsummary(read_fit_1,
+                           statistic = c("p = {p.value}"),
+                           gof_map = c("nobs", "r.squared", "adj.r.squared"))
+
+
+
+```
+
+From the linear regression output for math scores, the regular class has an estimated cumulative math score of 483.26 points. We can infer that on average, students in the regular class with an aide score 0.25 points less than students in the regular class  and on average, students in the small class score 8.21 points higher than students in regular classes with an aide. Because the p value is extremely small for the small class size, that indicates that that value is statistically significant so we reject the null hypothesis whereas for students in the regular class size with an aide, the p-value is greater then 0.5 which means that it's not statistically significant so we do not reject the null hypothesis. 
+
+The regression output for reading scores shows that for the regular class, there is an estimated cumulative reading score of 434.68 points. We can infer that on average, students in the regular class with an aide score 0.81 points higher than student in the regular class and on average, students in the small class score 5.90 points higher than students in regular classes with an aide. In this regression, since the p values are less than 0.5, we conclude that the values are statistically significant for both small classes and regular classes with an aide, rejecting the null hypothesis.
+
+# Conclusion
+
+After visualizing the data and running linear regression models, based on the evidence, I conclude that they all support my initial hypothesis of students in smaller class sizes producing higher test scores on average than those in the other groups. Students in smaller classes scored a higher positive average in both tests (~8 pts for math and ~5 pts for reading). However, what this test does not account for is possible hidden learning disabilities students could have while in the groups. In order to remedy this, there should be some metrics/tests in place to ensure that the students within this experiment do not face any obstacles that would negatively impact their performance. Another confounding variable that would be helpful is to know how involved kids are outside of school (how many hours they are spending in extracurricular). This would also impact their performance because if some students are spending a lot of time juggling other activities, this would negatively impact their performance in class as they would be more tired and less likely to fully grasp the material. Similarly, noting the amount of sleep a student gets would also be very helpful to see if that has any impact on their performance (more sleep = proactive, less sleep = cranky / less likely to pay attention). 
+
